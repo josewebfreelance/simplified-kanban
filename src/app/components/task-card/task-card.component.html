@@ -8,8 +8,14 @@
     <p>{{ task().description }}</p>
   </mat-card-content>
 
-  <mat-card-actions>
-    <button mat-icon-button color="warn" (click)="onDelete()" aria-label="Eliminar tarea">
+  <mat-card-actions align="end">
+    <button class="btn-action edit" matTooltip="Editar tarea" matMiniFab color="primary" (click)="onEdit(task())"
+      aria-label="Editar tarea">
+      <mat-icon>edit</mat-icon>
+    </button>
+
+    <button class="btn-action delete" matTooltip="Eliminar tarea" matMiniFab color="warn" (click)="onDelete()"
+      aria-label="Eliminar tarea">
       <mat-icon>delete</mat-icon>
     </button>
   </mat-card-actions>

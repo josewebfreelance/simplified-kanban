@@ -1,12 +1,18 @@
 <div class="filters">
-  <strong>Filtrar por Prioridad:</strong>
+  <div class="filter-group">
+    <strong>Filtrar por Prioridad:</strong>
+    <mat-button-toggle-group [value]="activeFilter()" (change)="setFilter($event.value)">
+      <mat-button-toggle value="all">Todas</mat-button-toggle>
+      <mat-button-toggle value="high">Alta</mat-button-toggle>
+      <mat-button-toggle value="medium">Media</mat-button-toggle>
+      <mat-button-toggle value="low">Baja</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
 
-  <mat-button-toggle-group [value]="activeFilter()" (change)="setFilter($event.value)">
-    <mat-button-toggle value="all">Todas</mat-button-toggle>
-    <mat-button-toggle value="high">Alta</mat-button-toggle>
-    <mat-button-toggle value="medium">Media</mat-button-toggle>
-    <mat-button-toggle value="low">Baja</mat-button-toggle>
-  </mat-button-toggle-group>
+  <button mat-raised-button color="primary" (click)="openTaskForm()">
+    <mat-icon>add</mat-icon>
+    Nueva Tarea
+  </button>
 </div>
 
 <div class="board-container" cdkDropListGroup>
@@ -22,6 +28,7 @@
         cdkDrag
         [cdkDragData]="task"
         [task]="task" 
+        (edit)="editTask($event)"
         (delete)="deleteTask(task.id)">
       </app-task-card>
     }
@@ -39,6 +46,7 @@
         cdkDrag
         [cdkDragData]="task"
         [task]="task" 
+        (edit)="editTask($event)"
         (delete)="deleteTask(task.id)">
       </app-task-card>
     }
@@ -56,6 +64,7 @@
         cdkDrag
         [cdkDragData]="task"
         [task]="task" 
+        (edit)="editTask($event)"
         (delete)="deleteTask(task.id)">
       </app-task-card>
     }

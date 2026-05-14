@@ -1,59 +1,61 @@
-# SimplifiedKanban
+# Simplified Kanban - Angular 21
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.10.
+Este proyecto es una aplicación de tablero Kanban moderna, construida con Angular 21, enfocada en la reactividad basada en **Signals** y una arquitectura **Zoneless**.
 
-## Development server
+## 🚀 Instalación y Ejecución
 
-To start a local development server, run:
+Sigue estos pasos para poner en marcha el proyecto localmente:
 
+1. **Clonar el repositorio** `https://github.com/josewebfreelance/simplified-kanban`.
+2. **Instalar dependencias**:
+   ```bash
+   npm install
+   ```
+3. **Iniciar el servidor de desarrollo**:
+   ```bash
+   npm run start
+   ```
+4. **Abrir en el navegador**:
+   Navega a `http://localhost:4200/`. La aplicación se recargará automáticamente al detectar cambios.
+
+---
+
+## 🛠️ Decisiones Técnicas
+
+- **Angular 21 (Zoneless)**: Se prescindió de `zone.js` utilizando `provideZonelessChangeDetection()`. Esto mejora el rendimiento y reduce el tamaño del bundle, delegando la detección de cambios a la reactividad nativa.
+- **Angular Signals**: Se utiliza como el motor principal de estado. A diferencia de RxJS, los Signals permiten una reactividad granular y un acceso síncrono al estado, lo que simplifica la lógica de los componentes.
+- **Angular Material**: Se emplearon componentes de Material para una interfaz profesional y el CDK (Component Dev Kit) específicamente para la funcionalidad de **Drag and Drop**.
+- **Vitest**: Se configuró Vitest como corredor de pruebas por su velocidad y compatibilidad con el ecosistema moderno de herramientas de construcción.
+- **Persistencia en LocalStorage**: Se implementó un efecto (`effect`) en el servicio de tareas para sincronizar automáticamente el estado con el almacenamiento local del navegador.
+
+---
+
+## ⚖️ Trade-offs
+
+- **Signals vs RxJS**: Se decidió priorizar Signals para el estado de la UI por su simplicidad. Signals reduce la verbosidad y el riesgo de fugas de memoria.
+- **Diseño Standalone**: Se optó por componentes Standalone para eliminar la necesidad de `NgModules`, facilitando una estructura más plana y fácil de mantener.
+- **LocalStorage vs Backend**: Para mantener el enfoque en la "simplicidad", se utilizó LocalStorage.
+
+---
+
+## 📝 Lo que no se alcanzó a hacer (y por qué)
+
+1. **Integración con Backend Real**: No se implementó una API REST para centrar el esfuerzo en demostrar la reactividad con Signals y Zoneless en el frontend.
+2. **Autenticación de Usuarios**: NO era requerido.
+
+---
+
+## 🧪 Pruebas Unitarias
+
+Para ejecutar las pruebas:
 ```bash
-ng serve
+npm run test
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🏗️ Construcción para Producción
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+Para compilar el proyecto:
 ```bash
-ng generate component component-name
+npm run build
 ```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Los archivos finales se generarán en la carpeta `dist/`.
