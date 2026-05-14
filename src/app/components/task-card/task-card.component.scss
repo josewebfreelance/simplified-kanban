@@ -1,0 +1,42 @@
+.task-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    cursor: grab;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  mat-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  mat-card-subtitle {
+    font-size: 0.85rem;
+    text-transform: capitalize;
+  }
+
+  mat-card-content {
+    margin-top: 12px;
+    font-size: 0.95rem;
+    color: var(--mat-sys-on-surface-variant);
+  }
+
+  &.priority-high {
+    border-left: 4px solid var(--mat-sys-error);
+  }
+
+  &.priority-medium {
+    border-left: 4px solid var(--mat-sys-tertiary);
+  }
+
+  &.priority-low {
+    border-left: 4px solid var(--mat-sys-secondary);
+  }
+}

@@ -2,10 +2,13 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 import { TaskService } from '../../core/services/task.service';
 import { TaskPriority, TaskStatus } from '../../core/models/task.model';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { TaskCardComponent } from '../task-card/task-card.component';
+import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
+import { Task } from '../../core/models/task.model';
 
 @Component({
   selector: 'app-kanban-board',
-  imports: [MatButtonToggleModule],
+  imports: [MatButtonToggleModule, TaskCardComponent, DragDropModule],
   templateUrl: './kanban-board.component.html',
   styleUrl: './kanban-board.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,5 +32,13 @@ export class KanbanBoardComponent {
 
   deleteTask(id: string) {
     this.taskService.deleteTask(id);
+  }
+
+  drop(event: CdkDragDrop<Task[]>) {
+    if (event.previousContainer !== event.container) {
+      const task = event.item.data as Task;
+      const newStatus = event.container.id as TaskStatus;
+      this.moveTask(task.id, newStatus);
+    }
   }
 }
