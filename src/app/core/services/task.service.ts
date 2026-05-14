@@ -7,7 +7,29 @@ import { Task, TaskPriority, TaskStatus } from '../models/task.model';
 export class TaskService {
   private readonly STORAGE_KEY = 'kanban_tasks';
 
-  private tasksSignal = signal<Task[]>(this.loadFromStorage());
+  private tasksSignal = signal<Task[]>([
+    {
+      id: '1',
+      title: 'Task 1',
+      description: 'Description 1',
+      priority: 'high',
+      status: 'todo'
+    },
+    {
+      id: '2',
+      title: 'Task 2',
+      description: 'Description 2',
+      priority: 'medium',
+      status: 'in-progress'
+    },
+    {
+      id: '3',
+      title: 'Task 3',
+      description: 'Description 3',
+      priority: 'low',
+      status: 'done'
+    }
+  ]);
   private filterSignal = signal<TaskPriority | 'all'>('all');
 
   tasks = computed(() => {

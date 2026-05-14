@@ -9,19 +9,55 @@
   </mat-button-toggle-group>
 </div>
 
-<div class="board-container">
+<div class="board-container" cdkDropListGroup>
   <!-- TODO Column -->
-  <div class="column">
+  <div class="column"
+       cdkDropList
+       id="todo"
+       [cdkDropListData]="todoTasks()"
+       (cdkDropListDropped)="drop($event)">
     <h2>Por hacer ({{ todoTasks().length }})</h2>
+    @for (task of todoTasks(); track task.id) {
+      <app-task-card 
+        cdkDrag
+        [cdkDragData]="task"
+        [task]="task" 
+        (delete)="deleteTask(task.id)">
+      </app-task-card>
+    }
   </div>
 
   <!-- IN PROGRESS Column -->
-  <div class="column">
+  <div class="column"
+       cdkDropList
+       id="in-progress"
+       [cdkDropListData]="inProgressTasks()"
+       (cdkDropListDropped)="drop($event)">
     <h2>En progreso ({{ inProgressTasks().length }})</h2>
+    @for (task of inProgressTasks(); track task.id) {
+      <app-task-card 
+        cdkDrag
+        [cdkDragData]="task"
+        [task]="task" 
+        (delete)="deleteTask(task.id)">
+      </app-task-card>
+    }
   </div>
 
   <!-- DONE Column -->
-  <div class="column">
+  <div class="column"
+       cdkDropList
+       id="done"
+       [cdkDropListData]="doneTasks()"
+       (cdkDropListDropped)="drop($event)">
     <h2>Hecho ({{ doneTasks().length }})</h2>
+    @for (task of doneTasks(); track task.id) {
+      <app-task-card 
+        cdkDrag
+        [cdkDragData]="task"
+        [task]="task" 
+        (delete)="deleteTask(task.id)">
+      </app-task-card>
+    }
   </div>
 </div>
