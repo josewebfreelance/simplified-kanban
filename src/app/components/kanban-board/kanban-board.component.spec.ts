@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { KanbanBoardComponent } from './kanban-board.component';
 import { TaskService } from '../../core/services/task.service';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { signal } from '@angular/core';
@@ -25,6 +26,10 @@ describe('KanbanBoardComponent', () => {
       open: vi.fn()
     };
 
+    const mockSnackBar = {
+      open: vi.fn()
+    };
+
     await TestBed.configureTestingModule({
       imports: [KanbanBoardComponent, NoopAnimationsModule],
     })
@@ -32,6 +37,7 @@ describe('KanbanBoardComponent', () => {
         set: {
           providers: [
             { provide: MatDialog, useValue: mockDialog },
+            { provide: MatSnackBar, useValue: mockSnackBar },
             TaskService
           ]
         }
@@ -42,6 +48,8 @@ describe('KanbanBoardComponent', () => {
     component = fixture.componentInstance;
     taskService = fixture.debugElement.injector.get(TaskService);
     dialog = fixture.debugElement.injector.get(MatDialog);
+    const snackBar = fixture.debugElement.injector.get(MatSnackBar);
+    (component as any).snackBar = snackBar; // Ensure mock is used
 
     fixture.detectChanges();
   });
@@ -75,7 +83,12 @@ describe('KanbanBoardComponent', () => {
 
   it('should call deleteTask when card emits delete', () => {
     const spy = vi.spyOn(taskService, 'deleteTask');
+    const snackBar = fixture.debugElement.injector.get(MatSnackBar);
+    const snackBarSpy = vi.spyOn(snackBar, 'open');
+    
     component.deleteTask('some-id');
+    
     expect(spy).toHaveBeenCalledWith('some-id');
+    expect(snackBarSpy).toHaveBeenCalledWith('Tarea eliminada correctamente', 'Cerrar', { duration: 3000 });
   });
 });

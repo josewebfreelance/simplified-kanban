@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TaskService } from '../../core/services/task.service';
 import { Task, TaskPriority } from '../../core/models/task.model';
 
@@ -17,6 +18,7 @@ import { Task, TaskPriority } from '../../core/models/task.model';
     MatSelectModule,
     MatButtonModule,
     MatDialogModule,
+    MatSnackBarModule,
   ],
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.scss',
@@ -26,6 +28,7 @@ export class TaskFormComponent {
   private fb = inject(NonNullableFormBuilder);
   private taskService = inject(TaskService);
   private dialogRef = inject(MatDialogRef<TaskFormComponent>);
+  private snackBar = inject(MatSnackBar);
   public data = inject<Task | null>(MAT_DIALOG_DATA);
 
   taskForm = this.fb.group({
@@ -53,6 +56,12 @@ export class TaskFormComponent {
           status: 'todo',
         });
       }
+
+      this.snackBar.open(
+        this.data ? 'Tarea actualizada correctamente' : 'Tarea creada correctamente',
+        'Cerrar',
+        { duration: 3000 }
+      );
 
       this.dialogRef.close(true);
     }
