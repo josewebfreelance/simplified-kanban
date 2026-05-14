@@ -1,0 +1,27 @@
+<div class="filters">
+  <strong>Filtrar por Prioridad:</strong>
+
+  <mat-button-toggle-group [value]="activeFilter()" (change)="setFilter($event.value)">
+    <mat-button-toggle value="all">Todas</mat-button-toggle>
+    <mat-button-toggle value="high">Alta</mat-button-toggle>
+    <mat-button-toggle value="medium">Media</mat-button-toggle>
+    <mat-button-toggle value="low">Baja</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<div class="board-container">
+  <!-- TODO Column -->
+  <div class="column">
+    <h2>Por hacer ({{ todoTasks().length }})</h2>
+  </div>
+
+  <!-- IN PROGRESS Column -->
+  <div class="column">
+    <h2>En progreso ({{ inProgressTasks().length }})</h2>
+  </div>
+
+  <!-- DONE Column -->
+  <div class="column">
+    <h2>Hecho ({{ doneTasks().length }})</h2>
+  </div>
+</div>
