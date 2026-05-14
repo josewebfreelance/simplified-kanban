@@ -1,0 +1,72 @@
+<div class="filters">
+  <div class="filter-group">
+    <strong>Filtrar por Prioridad:</strong>
+    <mat-button-toggle-group [value]="activeFilter()" (change)="setFilter($event.value)">
+      <mat-button-toggle value="all">Todas</mat-button-toggle>
+      <mat-button-toggle value="high">Alta</mat-button-toggle>
+      <mat-button-toggle value="medium">Media</mat-button-toggle>
+      <mat-button-toggle value="low">Baja</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <button mat-raised-button color="primary" (click)="openTaskForm()">
+    <mat-icon>add</mat-icon>
+    Nueva Tarea
+  </button>
+</div>
+
+<div class="board-container" cdkDropListGroup>
+  <!-- TODO Column -->
+  <div class="column"
+       cdkDropList
+       id="todo"
+       [cdkDropListData]="todoTasks()"
+       (cdkDropListDropped)="drop($event)">
+    <h2>Por hacer ({{ todoTasks().length }})</h2>
+    @for (task of todoTasks(); track task.id) {
+      <app-task-card 
+        cdkDrag
+        [cdkDragData]="task"
+        [task]="task" 
+        (edit)="editTask($event)"
+        (delete)="deleteTask(task.id)">
+      </app-task-card>
+    }
+  </div>
+
+  <!-- IN PROGRESS Column -->
+  <div class="column"
+       cdkDropList
+       id="in-progress"
+       [cdkDropListData]="inProgressTasks()"
+       (cdkDropListDropped)="drop($event)">
+    <h2>En progreso ({{ inProgressTasks().length }})</h2>
+    @for (task of inProgressTasks(); track task.id) {
+      <app-task-card 
+        cdkDrag
+        [cdkDragData]="task"
+        [task]="task" 
+        (edit)="editTask($event)"
+        (delete)="deleteTask(task.id)">
+      </app-task-card>
+    }
+  </div>
+
+  <!-- DONE Column -->
+  <div class="column"
+       cdkDropList
+       id="done"
+       [cdkDropListData]="doneTasks()"
+       (cdkDropListDropped)="drop($event)">
+    <h2>Hecho ({{ doneTasks().length }})</h2>
+    @for (task of doneTasks(); track task.id) {
+      <app-task-card 
+        cdkDrag
+        [cdkDragData]="task"
+        [task]="task" 
+        (edit)="editTask($event)"
+        (delete)="deleteTask(task.id)">
+      </app-task-card>
+    }
+  </div>
+</div>

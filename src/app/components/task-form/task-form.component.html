@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>{{ data ? 'Editar Tarea' : 'Agregar Nueva Tarea' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="taskForm" class="task-form" id="taskForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="title" placeholder="Ej: Comprar leche">
+      @if (taskForm.controls.title.errors?.['required']) {
+      <mat-error>El título es requerido</mat-error>
+      }
+      @if (taskForm.controls.title.errors?.['minlength']) {
+      <mat-error>Mínimo 3 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="description" placeholder="Detalles de la tarea..."></textarea>
+      @if (taskForm.controls.description.errors?.['required']) {
+      <mat-error>La descripción es requerida</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Prioridad</mat-label>
+      <mat-select formControlName="priority">
+        <mat-option value="low">Baja</mat-option>
+        <mat-option value="medium">Media</mat-option>
+        <mat-option value="high">Alta</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-raised-button color="primary" type="submit" form="taskForm" [disabled]="taskForm.invalid"
+    (click)="onSubmit()">
+    {{ data ? 'Guardar Cambios' : 'Agregar Tarea' }}
+  </button>
+</mat-dialog-actions>

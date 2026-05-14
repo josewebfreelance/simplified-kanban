@@ -1,1 +1,12 @@
-<h1>Hello, simplified-kanban</h1>
+<header class="app-header">
+  <h1>{{ title() }}</h1>
+  <button style="background-color: #fff;" [matTooltip]="isDarkMode() ? 'Modo Claro' : 'Modo Oscuro'" mat-icon-button
+    (click)="toggleTheme()">
+    <mat-icon style="color: #424e4f;">
+      {{ isDarkMode() ? 'light_mode' : 'dark_mode' }}
+    </mat-icon>
+  </button>
+</header>
+<main style="margin: 0;">
+  <app-kanban-board></app-kanban-board>
+</main>
