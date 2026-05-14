@@ -9,10 +9,11 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TaskFormComponent } from '../task-form/task-form.component';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-kanban-board',
-  imports: [MatButtonToggleModule, TaskCardComponent, DragDropModule, MatDialogModule, MatButtonModule, MatIconModule],
+  imports: [MatButtonToggleModule, TaskCardComponent, DragDropModule, MatDialogModule, MatButtonModule, MatIconModule, MatSnackBarModule],
   templateUrl: './kanban-board.component.html',
   styleUrl: './kanban-board.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,6 +21,7 @@ import { TaskFormComponent } from '../task-form/task-form.component';
 export class KanbanBoardComponent {
   private taskService = inject(TaskService);
   private dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
 
   activeFilter = this.taskService.filter;
 
@@ -37,6 +39,7 @@ export class KanbanBoardComponent {
 
   deleteTask(id: string) {
     this.taskService.deleteTask(id);
+    this.snackBar.open('Tarea eliminada correctamente', 'Cerrar', { duration: 3000 });
   }
 
   drop(event: CdkDragDrop<Task[]>) {

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskFormComponent } from './task-form.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { TaskService } from '../../core/services/task.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +16,10 @@ describe('TaskFormComponent', () => {
     close: vi.fn()
   };
 
+  const mockSnackBar = {
+    open: vi.fn()
+  };
+
   const mockTask: Task = {
     id: '1',
     title: 'Existing Task',
@@ -26,16 +31,22 @@ describe('TaskFormComponent', () => {
   const setupTest = (data: Task | null = null) => {
     TestBed.configureTestingModule({
       imports: [TaskFormComponent, NoopAnimationsModule, ReactiveFormsModule],
-      providers: [
-        { provide: MatDialogRef, useValue: mockDialogRef },
-        { provide: MAT_DIALOG_DATA, useValue: data },
-        TaskService
-      ]
-    }).compileComponents();
+    })
+    .overrideComponent(TaskFormComponent, {
+      set: {
+        providers: [
+          { provide: MatDialogRef, useValue: mockDialogRef },
+          { provide: MAT_DIALOG_DATA, useValue: data },
+          { provide: MatSnackBar, useValue: mockSnackBar },
+          TaskService
+        ]
+      }
+    })
+    .compileComponents();
 
     fixture = TestBed.createComponent(TaskFormComponent);
     component = fixture.componentInstance;
-    taskService = TestBed.inject(TaskService);
+    taskService = fixture.debugElement.injector.get(TaskService);
     fixture.detectChanges();
   };
 
@@ -73,6 +84,7 @@ describe('TaskFormComponent', () => {
         priority: 'high',
         status: 'todo'
       }));
+      expect(mockSnackBar.open).toHaveBeenCalledWith('Tarea creada correctamente', 'Cerrar', { duration: 3000 });
       expect(mockDialogRef.close).toHaveBeenCalledWith(true);
     });
   });
@@ -103,6 +115,7 @@ describe('TaskFormComponent', () => {
         id: mockTask.id,
         title: 'Updated Title'
       }));
+      expect(mockSnackBar.open).toHaveBeenCalledWith('Tarea actualizada correctamente', 'Cerrar', { duration: 3000 });
       expect(mockDialogRef.close).toHaveBeenCalledWith(true);
     });
   });
