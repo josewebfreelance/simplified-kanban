@@ -6,11 +6,11 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 @Component({
   selector: 'app-kanban-board',
   imports: [MatButtonToggleModule],
-  templateUrl: './kanban-board.html',
-  styleUrl: './kanban-board.scss',
+  templateUrl: './kanban-board.component.html',
+  styleUrl: './kanban-board.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class KanbanBoard {
+export class KanbanBoardComponent {
   private taskService = inject(TaskService);
 
   activeFilter = this.taskService.filter;

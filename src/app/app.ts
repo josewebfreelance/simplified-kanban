@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { KanbanBoard } from './components/kanban-board/kanban-board';
+import { KanbanBoardComponent } from './components/kanban-board/kanban-board.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
-  imports: [KanbanBoard]
+  imports: [KanbanBoardComponent]
 })
 export class App {
   readonly title = signal('Gestor de tareas');
