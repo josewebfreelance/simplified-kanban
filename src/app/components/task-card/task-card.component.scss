@@ -39,4 +39,19 @@
   &.priority-low {
     border-left: 4px solid var(--mat-sys-secondary);
   }
+
+  .btn-action {
+    border-radius: 100%;
+
+    &.edit {
+      margin-right: 1rem;
+    }
+
+    &.delete {
+      background-color: #f44336 !important;
+      color: #ffffff !important;
+    }
+
+  }
+
 }

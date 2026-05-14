@@ -5,16 +5,21 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { TaskCardComponent } from '../task-card/task-card.component';
 import { DragDropModule, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Task } from '../../core/models/task.model';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { TaskFormComponent } from '../task-form/task-form.component';
 
 @Component({
   selector: 'app-kanban-board',
-  imports: [MatButtonToggleModule, TaskCardComponent, DragDropModule],
+  imports: [MatButtonToggleModule, TaskCardComponent, DragDropModule, MatDialogModule, MatButtonModule, MatIconModule],
   templateUrl: './kanban-board.component.html',
   styleUrl: './kanban-board.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KanbanBoardComponent {
   private taskService = inject(TaskService);
+  private dialog = inject(MatDialog);
 
   activeFilter = this.taskService.filter;
 
@@ -40,5 +45,17 @@ export class KanbanBoardComponent {
       const newStatus = event.container.id as TaskStatus;
       this.moveTask(task.id, newStatus);
     }
+  }
+
+  openTaskForm(task: Task | null = null) {
+    this.dialog.open(TaskFormComponent, {
+      width: '500px',
+      disableClose: true,
+      data: task
+    });
+  }
+
+  editTask(task: Task) {
+    this.openTaskForm(task);
   }
 }
